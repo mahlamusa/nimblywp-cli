@@ -94,6 +94,45 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
 - [x] `nimbly deployments trigger <id>` - Trigger deployment
 - [x] `nimbly deployments delete <id>` - Delete deployment
 
+#### WordPress Core (`src/commands/core.ts`)
+- [x] `nimbly core info <site-id>` - Get WordPress version information
+- [x] `nimbly core update <site-id>` - Update WordPress core
+- [x] `nimbly core check-update <site-id>` - Check for available updates
+
+#### WP-CLI Commands (`src/commands/commands.ts`)
+- [x] `nimbly commands list` - List available WP-CLI commands
+- [x] `nimbly commands run <site-id> <command>` - Execute WP-CLI command
+- [x] `nimbly commands batch <site-id>` - Execute multiple commands
+
+#### DNS Management (`src/commands/dns.ts`)
+- [x] `nimbly dns list <site-id>` - List DNS records
+- [x] `nimbly dns get <record-id>` - Get DNS record details
+- [x] `nimbly dns create <site-id>` - Create DNS record
+- [x] `nimbly dns update <record-id>` - Update DNS record
+- [x] `nimbly dns delete <record-id>` - Delete DNS record
+
+#### SSL Certificates (`src/commands/ssl.ts`)
+- [x] `nimbly ssl status <site-id>` - Check SSL certificate status
+- [x] `nimbly ssl renew <site-id>` - Force SSL certificate renewal
+- [x] `nimbly ssl enable <site-id>` - Enable SSL for site
+- [x] `nimbly ssl disable <site-id>` - Disable SSL for site
+- [x] `nimbly ssl verify <site-id>` - Verify SSL certificate validity
+
+#### WordPress Users (`src/commands/users.ts`)
+- [x] `nimbly users list <site-id>` - List WordPress users
+- [x] `nimbly users get <site-id> <user-id>` - Get user details
+- [x] `nimbly users create <site-id>` - Create WordPress user
+- [x] `nimbly users update <site-id> <user-id>` - Update user
+- [x] `nimbly users delete <site-id> <user-id>` - Delete user
+
+#### Database Operations (`src/commands/database.ts`)
+- [x] `nimbly database info <site-id>` - Get database information
+- [x] `nimbly database export <site-id>` - Export database
+- [x] `nimbly database import <site-id>` - Import database from SQL
+- [x] `nimbly database optimize <site-id>` - Optimize database tables
+- [x] `nimbly database repair <site-id>` - Repair database tables
+- [x] `nimbly database search-replace <site-id>` - Search and replace in database
+
 ### Testing & CI/CD
 
 - [x] **Vitest Configuration**
@@ -133,13 +172,13 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
   - [ ] Interactive site creation wizard
   - [ ] Better inquirer.js integration
 
-- [ ] **Additional Commands** (from requirements doc)
-  - [ ] WordPress Core commands (`nimbly core update`, etc.)
-  - [ ] Custom commands execution (`nimbly commands run`)
-  - [ ] DNS management (`nimbly dns list`, `nimbly dns create`)
-  - [ ] SSL certificate management
-  - [ ] User management
-  - [ ] Database operations
+- [x] **Additional Commands** (from requirements doc)
+  - [x] WordPress Core commands (`nimbly core update`, etc.)
+  - [x] Custom commands execution (`nimbly commands run`)
+  - [x] DNS management (`nimbly dns list`, `nimbly dns create`)
+  - [x] SSL certificate management
+  - [x] User management
+  - [x] Database operations
 
 ### Medium Priority
 
@@ -198,32 +237,40 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
 | Plugin Commands | 6/6 | 6 | 100% |
 | Theme Commands | 5/5 | 5 | 100% |
 | Deployment Commands | 4/4 | 4 | 100% |
-| Additional Commands | 0/12 | 12 | 0% |
+| WordPress Core Commands | 3/3 | 3 | 100% |
+| WP-CLI Commands | 3/3 | 3 | 100% |
+| DNS Commands | 5/5 | 5 | 100% |
+| SSL Commands | 5/5 | 5 | 100% |
+| User Commands | 5/5 | 5 | 100% |
+| Database Commands | 6/6 | 6 | 100% |
 | Testing | 3/8 | 8 | 38% |
-| **TOTAL** | **41/63** | **63** | **65%** |
+| **TOTAL** | **68/76** | **76** | **89%** |
 
 ## 🚀 Next Steps
 
-### Phase 1: Core Completion (Week 1-2)
-1. Test against actual NimblyWP API
-2. Fix any API endpoint mismatches
-3. Add confirmation prompts
-4. Improve error messages
-5. Write comprehensive tests
+### Phase 1: Testing & Validation (Week 1-2)
+1. ✅ All 68 commands implemented
+2. Test against actual NimblyWP API
+3. Fix any API endpoint mismatches
+4. Add confirmation prompts for destructive operations
+5. Write comprehensive test coverage (target: >80%)
+6. Improve error messages and validation
 
-### Phase 2: Feature Expansion (Week 3-4)
-1. Add WordPress Core commands
-2. Implement custom command execution
-3. Add DNS management
-4. WebSocket real-time updates
-5. Enhanced output formatting
+### Phase 2: Enhancement & Polish (Week 3-4)
+1. WebSocket support for real-time updates
+2. Enhanced output formatting with colors
+3. Interactive wizards (site creation, etc.)
+4. Shell completions (bash, zsh, fish)
+5. Configuration enhancements
+6. Performance optimizations
 
-### Phase 3: Polish & Release (Week 5-6)
-1. Complete test coverage
-2. Shell completions
-3. Documentation improvements
-4. Beta testing
+### Phase 3: Release (Week 5-6)
+1. Beta testing with early users
+2. Documentation improvements
+3. Video tutorials
+4. Security audit
 5. v1.0.0 release to npm
+6. Announce on NimblyWP platform
 
 ## 🔗 Related Documents
 
@@ -243,4 +290,4 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
 ---
 
 **Last Updated:** 2026-10-13
-**Status:** In Development (65% complete)
+**Status:** Feature Complete (89% complete - all core features implemented, testing remaining)

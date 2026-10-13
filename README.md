@@ -96,6 +96,99 @@ nimbly deployments list <site-id>
 nimbly deployments trigger <deployment-id>
 ```
 
+### WordPress Core
+
+```bash
+# Check WordPress version
+nimbly core info <site-id>
+
+# Update WordPress
+nimbly core update <site-id> --wait
+
+# Check for updates
+nimbly core check-update <site-id>
+```
+
+### WP-CLI Commands
+
+```bash
+# List available commands
+nimbly commands list
+
+# Execute a WP-CLI command
+nimbly commands run <site-id> "option get siteurl" --wait
+
+# Run batch commands
+nimbly commands batch <site-id> -c "cache flush" "rewrite flush"
+```
+
+### DNS Management
+
+```bash
+# List DNS records
+nimbly dns list <site-id>
+
+# Create A record
+nimbly dns create <site-id> --type A --name www --value 192.168.1.1
+
+# Update DNS record
+nimbly dns update <record-id> --value 192.168.1.2
+
+# Delete DNS record
+nimbly dns delete <record-id>
+```
+
+### SSL Certificates
+
+```bash
+# Check SSL status
+nimbly ssl status <site-id>
+
+# Renew SSL certificate
+nimbly ssl renew <site-id> --wait
+
+# Enable SSL
+nimbly ssl enable <site-id>
+
+# Verify certificate
+nimbly ssl verify <site-id>
+```
+
+### WordPress Users
+
+```bash
+# List users
+nimbly users list <site-id>
+
+# Create admin user
+nimbly users create <site-id> -u admin -e admin@example.com -p password123 -r administrator
+
+# Update user
+nimbly users update <site-id> <user-id> --role editor
+
+# Delete user
+nimbly users delete <site-id> <user-id> --reassign 1
+```
+
+### Database Operations
+
+```bash
+# Get database info
+nimbly database info <site-id>
+
+# Export database
+nimbly database export <site-id> --wait
+
+# Import database
+nimbly database import <site-id> --file backup.sql
+
+# Optimize database
+nimbly database optimize <site-id>
+
+# Search and replace
+nimbly database search-replace <site-id> -s "oldurl.com" -r "newurl.com" --dry-run
+```
+
 ## Output Formats
 
 All list commands support multiple output formats:
