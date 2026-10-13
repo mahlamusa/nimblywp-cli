@@ -1,0 +1,30 @@
+# Source files
+src/
+tests/
+
+# Config files
+tsconfig.json
+vitest.config.ts
+.eslintrc.json
+.prettierrc
+
+# CI/CD
+.github/
+
+# Git
+.git/
+.gitignore
+
+# Documentation (keep README.md and LICENSE)
+CONTRIBUTING.md
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.tsbuildinfo
+coverage/
+
+# IDE
+.vscode/
+.idea/
