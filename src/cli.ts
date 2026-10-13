@@ -18,6 +18,12 @@ import { registerTemplateCommands } from './commands/templates.js';
 import { registerPluginCommands } from './commands/plugins.js';
 import { registerThemeCommands } from './commands/themes.js';
 import { registerDeploymentCommands } from './commands/deployments.js';
+import { registerCoreCommands } from './commands/core.js';
+import { registerCommandExecutionCommands } from './commands/commands.js';
+import { registerDnsCommands } from './commands/dns.js';
+import { registerSslCommands } from './commands/ssl.js';
+import { registerUserCommands } from './commands/users.js';
+import { registerDatabaseCommands } from './commands/database.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -44,6 +50,12 @@ registerTemplateCommands(program);
 registerPluginCommands(program);
 registerThemeCommands(program);
 registerDeploymentCommands(program);
+registerCoreCommands(program);
+registerCommandExecutionCommands(program);
+registerDnsCommands(program);
+registerSslCommands(program);
+registerUserCommands(program);
+registerDatabaseCommands(program);
 
 // Global error handler
 program.exitOverride();

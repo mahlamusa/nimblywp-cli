@@ -120,9 +120,9 @@ export class ApiClient {
   /**
    * DELETE request
    */
-  async delete<T>(path: string): Promise<ApiResponse<T>> {
+  async delete<T>(path: string, params?: Record<string, unknown>): Promise<ApiResponse<T>> {
     try {
-      const response = await this.client.delete<T>(path);
+      const response = await this.client.delete<T>(path, { params });
       return { data: response.data };
     } catch (error) {
       return { error: error as ApiError };

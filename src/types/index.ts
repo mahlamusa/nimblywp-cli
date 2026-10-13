@@ -78,8 +78,45 @@ export interface Operation {
   status: 'pending' | 'running' | 'success' | 'failed';
   progress?: number;
   message?: string;
+  result?: unknown;
   createdAt: string;
   completedAt?: string;
+}
+
+export interface CoreInfo {
+  version: string;
+  locale: string;
+  updateAvailable: boolean;
+  latestVersion?: string;
+}
+
+export interface DnsRecord {
+  id: string;
+  type: string;
+  name: string;
+  value: string;
+  ttl: number;
+  priority?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SslCertificate {
+  enabled: boolean;
+  status: 'active' | 'pending' | 'expired' | 'none';
+  issuer?: string;
+  expiresAt?: string;
+  daysRemaining?: number;
+  autoRenew: boolean;
+}
+
+export interface WordPressUser {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  displayName: string;
+  registered: string;
 }
 
 export interface ApiResponse<T = unknown> {
