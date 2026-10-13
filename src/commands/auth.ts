@@ -14,6 +14,7 @@ import {
   getProfile,
 } from '../lib/config.js';
 import { createApiClient } from '../lib/api-client.js';
+import { deviceFlowLogin } from '../lib/oauth-device-flow.js';
 import { output, outputSuccess, outputError } from '../utils/output.js';
 
 export function registerAuthCommands(program: Command): void {
@@ -22,38 +23,39 @@ export function registerAuthCommands(program: Command): void {
   // Login command
   auth
     .command('login')
-    .description('Login to NimblyWP')
-    .option('-t, --token <token>', 'API token (skip interactive login)')
+    .description('Login to NimblyWP using OAuth device flow')
+    .option('-t, --token <token>', 'Use API token instead of OAuth (legacy method)')
     .option('-u, --url <url>', 'API URL', 'https://api.nimblywp.com')
     .option('-p, --profile <name>', 'Profile name', 'default')
+    .option('-s, --scope <scope>', 'OAuth scopes to request', 'read write')
     .action(async (options) => {
       try {
         let token = options.token;
 
-        // Interactive login if no token provided
+        // OAuth device flow (default)
         if (!token) {
-          const answers = await inquirer.prompt([
-            {
-              type: 'input',
-              name: 'apiUrl',
-              message: 'API URL:',
-              default: options.url,
-            },
-            {
-              type: 'password',
-              name: 'token',
-              message: 'API Token:',
-              mask: '*',
-            },
-          ]);
+          console.log('\n🚀 NimblyWP CLI Authentication\n');
 
-          token = answers.token;
-          options.url = answers.apiUrl;
+          // Ask for API URL if not default
+          if (!options.url || options.url === 'https://api.nimblywp.com') {
+            const { apiUrl } = await inquirer.prompt([
+              {
+                type: 'input',
+                name: 'apiUrl',
+                message: 'API URL:',
+                default: options.url,
+              },
+            ]);
+            options.url = apiUrl;
+          }
+
+          // Perform OAuth device flow
+          token = await deviceFlowLogin(options.url, options.scope);
         }
 
-        // Validate credentials by making a test request
+        // Validate token by making a test request
         const client = createApiClient(options.url, token);
-        const response = await client.get('/api/user/profile');
+        const response = await client.get('/api/v1/me');
 
         if (response.error) {
           throw new Error(`Authentication failed: ${response.error.message}`);
@@ -70,7 +72,17 @@ export function registerAuthCommands(program: Command): void {
           useProfile(options.profile);
         }
 
+        console.log('');
         outputSuccess(`Logged in successfully as profile "${options.profile}"`);
+
+        // Show user info
+        if (response.data) {
+          const user = response.data as any;
+          console.log(`\nUser: ${user.email || user.name || 'Unknown'}`);
+          if (user.role) {
+            console.log(`Role: ${user.role}`);
+          }
+        }
       } catch (error) {
         outputError(error instanceof Error ? error.message : 'Login failed');
         process.exit(1);

@@ -23,13 +23,41 @@ npm install -g nimblywp-cli
 
 ### Authentication
 
+The CLI uses **OAuth 2.0 Device Flow** for secure authentication - no need to copy/paste API tokens!
+
 ```bash
-# Login to your NimblyWP account
+# Login with OAuth device flow (opens browser)
 nimbly auth login
 
-# Use API token (recommended for CI/CD)
+# The CLI will:
+# 1. Display a verification code (e.g., WXYZ-1234)
+# 2. Open your browser to https://dashboard.nimblywp.com/device
+# 3. Wait for you to authorize the device
+# 4. Automatically save your credentials
+
+# Use API token (recommended for CI/CD and scripts)
 nimbly auth login --token YOUR_API_TOKEN
+
+# Login to different API URL
+nimbly auth login --url https://your-instance.com
+
+# Request specific OAuth scopes
+nimbly auth login --scope "read write"
 ```
+
+**What happens during OAuth login:**
+1. CLI generates a device code and user-friendly verification code
+2. Browser opens automatically (or you manually visit the URL)
+3. You log in to NimblyWP dashboard (if not already logged in)
+4. You authorize the CLI with requested permissions
+5. CLI automatically receives and stores the access token
+
+**Benefits of OAuth:**
+- ✅ More secure - no copy/paste of sensitive tokens
+- ✅ Automatic browser flow
+- ✅ Easy to revoke from dashboard
+- ✅ Scope-based permissions
+- ✅ Works great for desktop use
 
 ### Site Management
 
