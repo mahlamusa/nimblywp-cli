@@ -3,10 +3,13 @@
 **Repository:** https://github.com/mahlamusa/nimblywp-cli
 **Created:** 2026-10-13
 **Current Version:** 0.1.0 (pre-release)
+**Latest Commit:** 8094c58
 
 ## Overview
 
 The NimblyWP CLI is a command-line interface for managing WordPress sites through the NimblyWP platform. This document tracks implementation progress against the requirements defined in `nimblywp-cli-requirements.md`.
+
+**Major Milestone:** OAuth 2.0 Device Flow authentication implemented (RFC 8628) for seamless, secure CLI login without manual token entry.
 
 ## ✅ Completed
 
@@ -45,10 +48,19 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
   - [x] Timeout handling
   - [x] Multiple operation support
 
+- [x] **OAuth 2.0 Device Flow** (`src/lib/oauth-device-flow.ts`)
+  - [x] RFC 8628 compliant implementation
+  - [x] Device code request and polling
+  - [x] Automatic browser opening
+  - [x] User-friendly verification codes (XXXX-XXXX)
+  - [x] Comprehensive error handling
+  - [x] Scope-based permission requests
+  - [x] Fallback to manual token entry
+
 ### Commands Implemented
 
 #### Authentication (`src/commands/auth.ts`)
-- [x] `nimbly auth login` - Login with API token
+- [x] `nimbly auth login` - OAuth 2.0 device flow (default) or token-based login
 - [x] `nimbly auth logout` - Remove profile
 - [x] `nimbly auth use <profile>` - Switch profiles
 - [x] `nimbly auth profiles` - List all profiles
@@ -275,10 +287,36 @@ The NimblyWP CLI is a command-line interface for managing WordPress sites throug
 ## 🔗 Related Documents
 
 - [Requirements Document](../nimblywp-cli-requirements.md) - Full specification
+- [OAuth Implementation Plan](../nimblywp-cli-oauth-implementation-plan.md) - Complete OAuth server-side implementation guide
 - [Platform API Docs](https://github.com/mahlamusa/nginx-wordpress-installer/blob/main/docs/API.md)
 - [Platform MCP Docs](https://github.com/mahlamusa/nginx-wordpress-installer/blob/main/docs/MCP.md)
 
 ## 📝 Notes
+
+### OAuth 2.0 Implementation
+
+The CLI now supports **OAuth 2.0 Device Authorization Grant (RFC 8628)** as the primary authentication method:
+
+**Client Side (CLI)** ✅ Complete:
+- Device flow implementation in `src/lib/oauth-device-flow.ts`
+- Automatic browser opening with `open` package
+- User-friendly verification code display
+- Polling with error handling
+- Updated auth commands to use OAuth by default
+
+**Server Side (Platform)** ⏳ Pending:
+- Requires platform endpoints: `/api/v1/oauth/device/code` and `/api/v1/oauth/device/token`
+- Requires dashboard UI at `/device` for authorization
+- See `nimblywp-cli-oauth-implementation-plan.md` for complete guide
+
+**Benefits**:
+- ✅ No manual token copy/paste
+- ✅ Better UX with automatic browser flow
+- ✅ Scope-based permissions
+- ✅ Easy revocation from dashboard
+- ✅ Standards-compliant (RFC 8628)
+
+### General Notes
 
 - Current implementation focuses on user-scoped operations only
 - No admin-only endpoints exposed (per requirements)

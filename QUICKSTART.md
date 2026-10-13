@@ -24,19 +24,39 @@ npm install -g nimblywp-cli
 
 ### 1. Login to Your Account
 
+The CLI uses **OAuth 2.0 Device Flow** for seamless authentication:
+
 ```bash
 nimbly auth login
 ```
 
-You'll be prompted for:
-- API URL (default: https://api.nimblywp.com)
-- API Token (get from your NimblyWP dashboard)
+**What happens:**
+1. CLI displays a verification code (e.g., `WXYZ-1234`)
+2. Browser opens automatically to https://dashboard.nimblywp.com/device
+3. You log in (if not already logged in)
+4. You authorize the CLI
+5. CLI receives token and saves it automatically
+
+**Alternative - Token-based login (for CI/CD):**
+
+```bash
+# Get token from dashboard: Settings → API Tokens
+nimbly auth login --token wpp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+**Custom API URL:**
+
+```bash
+nimbly auth login --url https://your-instance.com
+```
 
 ### 2. Verify Authentication
 
 ```bash
 nimbly auth whoami
 ```
+
+Shows your logged-in user email and role.
 
 ## Common Tasks
 
